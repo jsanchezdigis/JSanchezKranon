@@ -1,0 +1,707 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="JSanchezKranonModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Autor">
+          <Key>
+            <PropertyRef Name="IdAutor" />
+          </Key>
+          <Property Name="IdAutor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="AutorLibro">
+          <Key>
+            <PropertyRef Name="IdAutorLibro" />
+          </Key>
+          <Property Name="IdAutorLibro" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdLibro" Type="int" />
+          <Property Name="IdAutor" Type="int" />
+        </EntityType>
+        <EntityType Name="Editorial">
+          <Key>
+            <PropertyRef Name="IdEditorial" />
+          </Key>
+          <Property Name="IdEditorial" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Libro">
+          <Key>
+            <PropertyRef Name="IdLibro" />
+          </Key>
+          <Property Name="IdLibro" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Titulo" Type="varchar" MaxLength="50" />
+          <Property Name="AñoPublicacion" Type="varchar" MaxLength="4" />
+          <Property Name="IdEditorial" Type="int" />
+        </EntityType>
+        <Association Name="fk_AutorLibro_Autor">
+          <End Role="Autor" Type="Self.Autor" Multiplicity="0..1" />
+          <End Role="AutorLibro" Type="Self.AutorLibro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Autor">
+              <PropertyRef Name="IdAutor" />
+            </Principal>
+            <Dependent Role="AutorLibro">
+              <PropertyRef Name="IdAutor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_AutorLibro_Libro">
+          <End Role="Libro" Type="Self.Libro" Multiplicity="0..1" />
+          <End Role="AutorLibro" Type="Self.AutorLibro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Libro">
+              <PropertyRef Name="IdLibro" />
+            </Principal>
+            <Dependent Role="AutorLibro">
+              <PropertyRef Name="IdLibro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Libro_Editorial">
+          <End Role="Editorial" Type="Self.Editorial" Multiplicity="0..1" />
+          <End Role="Libro" Type="Self.Libro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Editorial">
+              <PropertyRef Name="IdEditorial" />
+            </Principal>
+            <Dependent Role="Libro">
+              <PropertyRef Name="IdEditorial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="AutorAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="AutorDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdAutor" Type="int" Mode="In" />
+        </Function>
+        <Function Name="AutorGetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="AutorGetById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdAutor" Type="int" Mode="In" />
+        </Function>
+        <Function Name="AutorLibroAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdAutor" Type="int" Mode="In" />
+          <Parameter Name="IdLibro" Type="int" Mode="In" />
+        </Function>
+        <Function Name="AutorLibroDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdAutorLibro" Type="int" Mode="In" />
+        </Function>
+        <Function Name="AutorLibroGetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="AutorLibroGetById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdLibro" Type="int" Mode="In" />
+        </Function>
+        <Function Name="AutorLibroUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdAutorLibro" Type="int" Mode="In" />
+          <Parameter Name="IdAutor" Type="int" Mode="In" />
+          <Parameter Name="IdLibro" Type="int" Mode="In" />
+        </Function>
+        <Function Name="AutorUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdAutor" Type="int" Mode="In" />
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="EditorialAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="EditorialDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdEditorial" Type="int" Mode="In" />
+        </Function>
+        <Function Name="EditorialGetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="EditorialGetById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdEditorial" Type="int" Mode="In" />
+        </Function>
+        <Function Name="EditorialUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdEditorial" Type="int" Mode="In" />
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetByAutor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdAutor" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetByAutorPublicacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdAutor" Type="int" Mode="In" />
+          <Parameter Name="AñoPublicacion" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetByBusqueda" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Titulo" Type="varchar" Mode="In" />
+          <Parameter Name="AñoInicio" Type="varchar" Mode="In" />
+          <Parameter Name="AñoFin" Type="varchar" Mode="In" />
+          <Parameter Name="IdEditorial" Type="int" Mode="In" />
+          <Parameter Name="IdAutor" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetByEditorial" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdEditorial" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetByPublicacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AñoPublicacionInicio" Type="varchar" Mode="In" />
+          <Parameter Name="AñoPublicacionFin" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetByTitulo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Titulo" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="LibroAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Titulo" Type="varchar" Mode="In" />
+          <Parameter Name="AñoPublicacion" Type="varchar" Mode="In" />
+          <Parameter Name="IdEditorial" Type="int" Mode="In" />
+          <Parameter Name="IdAutor" Type="int" Mode="In" />
+        </Function>
+        <Function Name="LibroAutorDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdAutor" Type="int" Mode="In" />
+        </Function>
+        <Function Name="LibroDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdLibro" Type="int" Mode="In" />
+        </Function>
+        <Function Name="LibroEditorialDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdEditorial" Type="int" Mode="In" />
+        </Function>
+        <Function Name="LibroGetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="LibroGetById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdLibro" Type="int" Mode="In" />
+        </Function>
+        <Function Name="LibroUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdAutorLibro" Type="int" Mode="In" />
+          <Parameter Name="IdLibro" Type="int" Mode="In" />
+          <Parameter Name="Titulo" Type="varchar" Mode="In" />
+          <Parameter Name="AñoPublicacion" Type="varchar" Mode="In" />
+          <Parameter Name="IdEditorial" Type="int" Mode="In" />
+          <Parameter Name="IdAutor" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="JSanchezKranonModelStoreContainer">
+          <EntitySet Name="Autor" EntityType="Self.Autor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AutorLibro" EntityType="Self.AutorLibro" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Editorial" EntityType="Self.Editorial" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Libro" EntityType="Self.Libro" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_AutorLibro_Autor" Association="Self.fk_AutorLibro_Autor">
+            <End Role="Autor" EntitySet="Autor" />
+            <End Role="AutorLibro" EntitySet="AutorLibro" />
+          </AssociationSet>
+          <AssociationSet Name="fk_AutorLibro_Libro" Association="Self.fk_AutorLibro_Libro">
+            <End Role="Libro" EntitySet="Libro" />
+            <End Role="AutorLibro" EntitySet="AutorLibro" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Libro_Editorial" Association="Self.fk_Libro_Editorial">
+            <End Role="Editorial" EntitySet="Editorial" />
+            <End Role="Libro" EntitySet="Libro" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="JSanchezKranonModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Autor">
+          <Key>
+            <PropertyRef Name="IdAutor" />
+          </Key>
+          <Property Name="IdAutor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AutorLibroes" Relationship="Self.fk_AutorLibro_Autor" FromRole="Autor" ToRole="AutorLibro" />
+        </EntityType>
+        <EntityType Name="AutorLibro">
+          <Key>
+            <PropertyRef Name="IdAutorLibro" />
+          </Key>
+          <Property Name="IdAutorLibro" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdLibro" Type="Int32" />
+          <Property Name="IdAutor" Type="Int32" />
+          <NavigationProperty Name="Autor" Relationship="Self.fk_AutorLibro_Autor" FromRole="AutorLibro" ToRole="Autor" />
+          <NavigationProperty Name="Libro" Relationship="Self.fk_AutorLibro_Libro" FromRole="AutorLibro" ToRole="Libro" />
+        </EntityType>
+        <EntityType Name="Editorial">
+          <Key>
+            <PropertyRef Name="IdEditorial" />
+          </Key>
+          <Property Name="IdEditorial" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Libroes" Relationship="Self.fk_Libro_Editorial" FromRole="Editorial" ToRole="Libro" />
+        </EntityType>
+        <EntityType Name="Libro">
+          <Key>
+            <PropertyRef Name="IdLibro" />
+          </Key>
+          <Property Name="IdLibro" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Titulo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AñoPublicacion" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="IdEditorial" Type="Int32" />
+          <NavigationProperty Name="AutorLibroes" Relationship="Self.fk_AutorLibro_Libro" FromRole="Libro" ToRole="AutorLibro" />
+          <NavigationProperty Name="Editorial" Relationship="Self.fk_Libro_Editorial" FromRole="Libro" ToRole="Editorial" />
+        </EntityType>
+        <Association Name="fk_AutorLibro_Autor">
+          <End Role="Autor" Type="Self.Autor" Multiplicity="0..1" />
+          <End Role="AutorLibro" Type="Self.AutorLibro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Autor">
+              <PropertyRef Name="IdAutor" />
+            </Principal>
+            <Dependent Role="AutorLibro">
+              <PropertyRef Name="IdAutor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_AutorLibro_Libro">
+          <End Role="Libro" Type="Self.Libro" Multiplicity="0..1" />
+          <End Role="AutorLibro" Type="Self.AutorLibro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Libro">
+              <PropertyRef Name="IdLibro" />
+            </Principal>
+            <Dependent Role="AutorLibro">
+              <PropertyRef Name="IdLibro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Libro_Editorial">
+          <End Role="Editorial" Type="Self.Editorial" Multiplicity="0..1" />
+          <End Role="Libro" Type="Self.Libro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Editorial">
+              <PropertyRef Name="IdEditorial" />
+            </Principal>
+            <Dependent Role="Libro">
+              <PropertyRef Name="IdEditorial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="JSanchezKranonEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Autors" EntityType="Self.Autor" />
+          <EntitySet Name="AutorLibroes" EntityType="Self.AutorLibro" />
+          <EntitySet Name="Editorials" EntityType="Self.Editorial" />
+          <EntitySet Name="Libroes" EntityType="Self.Libro" />
+          <AssociationSet Name="fk_AutorLibro_Autor" Association="Self.fk_AutorLibro_Autor">
+            <End Role="Autor" EntitySet="Autors" />
+            <End Role="AutorLibro" EntitySet="AutorLibroes" />
+          </AssociationSet>
+          <AssociationSet Name="fk_AutorLibro_Libro" Association="Self.fk_AutorLibro_Libro">
+            <End Role="Libro" EntitySet="Libroes" />
+            <End Role="AutorLibro" EntitySet="AutorLibroes" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Libro_Editorial" Association="Self.fk_Libro_Editorial">
+            <End Role="Editorial" EntitySet="Editorials" />
+            <End Role="Libro" EntitySet="Libroes" />
+          </AssociationSet>
+          <FunctionImport Name="AutorAdd">
+          <Parameter Name="Nombre" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="AutorDelete">
+          <Parameter Name="IdAutor" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="AutorGetAll" ReturnType="Collection(JSanchezKranonModel.AutorGetAll_Result)" />
+          <FunctionImport Name="AutorGetById" ReturnType="Collection(JSanchezKranonModel.AutorGetById_Result)">
+          <Parameter Name="IdAutor" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="AutorLibroAdd">
+            <Parameter Name="IdAutor" Mode="In" Type="Int32" />
+            <Parameter Name="IdLibro" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="AutorLibroDelete">
+          <Parameter Name="IdAutorLibro" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="AutorLibroGetAll" ReturnType="Collection(JSanchezKranonModel.AutorLibroGetAll_Result)" />
+          <FunctionImport Name="AutorLibroGetById" ReturnType="Collection(JSanchezKranonModel.AutorLibroGetById_Result)">
+          <Parameter Name="IdLibro" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="AutorLibroUpdate">
+            <Parameter Name="IdAutorLibro" Mode="In" Type="Int32" />
+            <Parameter Name="IdAutor" Mode="In" Type="Int32" />
+            <Parameter Name="IdLibro" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="AutorUpdate">
+            <Parameter Name="IdAutor" Mode="In" Type="Int32" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="EditorialAdd">
+          <Parameter Name="Nombre" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="EditorialDelete">
+          <Parameter Name="IdEditorial" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="EditorialGetById" ReturnType="Collection(String)">
+          <Parameter Name="IdEditorial" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="EditorialUpdate">
+            <Parameter Name="IdEditorial" Mode="In" Type="Int32" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetByAutor" ReturnType="Collection(JSanchezKranonModel.GetByAutor_Result)">
+          <Parameter Name="IdAutor" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetByAutorPublicacion" ReturnType="Collection(JSanchezKranonModel.GetByAutorPublicacion_Result)">
+            <Parameter Name="IdAutor" Mode="In" Type="Int32" />
+            <Parameter Name="AñoPublicacion" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetByEditorial" ReturnType="Collection(JSanchezKranonModel.GetByEditorial_Result)">
+          <Parameter Name="IdEditorial" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetByPublicacion" ReturnType="Collection(JSanchezKranonModel.GetByPublicacion_Result)">
+            <Parameter Name="AñoPublicacionInicio" Mode="In" Type="String" />
+            <Parameter Name="AñoPublicacionFin" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetByTitulo" ReturnType="Collection(JSanchezKranonModel.GetByTitulo_Result)">
+          <Parameter Name="Titulo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="LibroAutorDelete">
+          <Parameter Name="IdAutor" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="LibroDelete">
+          <Parameter Name="IdLibro" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="LibroEditorialDelete">
+          <Parameter Name="IdEditorial" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="LibroGetAll" ReturnType="Collection(JSanchezKranonModel.LibroGetAll_Result)" />
+          <FunctionImport Name="LibroGetById" ReturnType="Collection(JSanchezKranonModel.LibroGetById_Result)">
+          <Parameter Name="IdLibro" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="EditorialGetAll" ReturnType="Collection(JSanchezKranonModel.EditorialGetAll_Result)" />
+          <FunctionImport Name="LibroAdd">
+            <Parameter Name="Titulo" Mode="In" Type="String" />
+            <Parameter Name="AñoPublicacion" Mode="In" Type="String" />
+            <Parameter Name="IdEditorial" Mode="In" Type="Int32" />
+            <Parameter Name="IdAutor" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="LibroUpdate">
+            <Parameter Name="IdAutorLibro" Mode="In" Type="Int32" />
+            <Parameter Name="IdLibro" Mode="In" Type="Int32" />
+            <Parameter Name="Titulo" Mode="In" Type="String" />
+            <Parameter Name="AñoPublicacion" Mode="In" Type="String" />
+            <Parameter Name="IdEditorial" Mode="In" Type="Int32" />
+            <Parameter Name="IdAutor" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetByBusqueda" ReturnType="Collection(JSanchezKranonModel.GetByBusqueda_Result)">
+            <Parameter Name="Titulo" Mode="In" Type="String" />
+            <Parameter Name="AñoInicio" Mode="In" Type="String" />
+            <Parameter Name="AñoFin" Mode="In" Type="String" />
+            <Parameter Name="IdEditorial" Mode="In" Type="Int32" />
+            <Parameter Name="IdAutor" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="AutorGetAll_Result">
+          <Property Type="Int32" Name="IdAutor" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="AutorGetById_Result">
+          <Property Type="Int32" Name="IdAutor" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="AutorLibroGetAll_Result">
+          <Property Type="Int32" Name="IdAutorLibro" Nullable="false" />
+          <Property Type="Int32" Name="IdAutor" Nullable="false" />
+          <Property Type="String" Name="Autor" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="IdLibro" Nullable="false" />
+          <Property Type="String" Name="Titulo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="AñoPublicacion" Nullable="true" MaxLength="4" />
+          <Property Type="Int32" Name="IdEditorial" Nullable="false" />
+          <Property Type="String" Name="Editorial" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="AutorLibroGetById_Result">
+          <Property Type="Int32" Name="IdAutorLibro" Nullable="false" />
+          <Property Type="Int32" Name="IdAutor" Nullable="false" />
+          <Property Type="String" Name="Autor" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="IdLibro" Nullable="false" />
+          <Property Type="String" Name="Titulo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="AñoPublicacion" Nullable="true" MaxLength="4" />
+          <Property Type="Int32" Name="IdEditorial" Nullable="false" />
+          <Property Type="String" Name="Editorial" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetByAutor_Result">
+          <Property Type="Int32" Name="IdAutor" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="IdLibro" Nullable="false" />
+          <Property Type="String" Name="Titulo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="AñoPublicacion" Nullable="true" MaxLength="4" />
+          <Property Type="Int32" Name="IdEditorial" Nullable="false" />
+          <Property Type="String" Name="Nombre1" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetByAutorPublicacion_Result">
+          <Property Type="Int32" Name="IdAutor" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="IdLibro" Nullable="false" />
+          <Property Type="String" Name="Titulo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="AñoPublicacion" Nullable="true" MaxLength="4" />
+          <Property Type="Int32" Name="IdEditorial" Nullable="false" />
+          <Property Type="String" Name="Nombre1" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetByEditorial_Result">
+          <Property Type="Int32" Name="IdAutor" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="IdLibro" Nullable="false" />
+          <Property Type="String" Name="Titulo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="AñoPublicacion" Nullable="true" MaxLength="4" />
+          <Property Type="Int32" Name="IdEditorial" Nullable="false" />
+          <Property Type="String" Name="Nombre1" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetByPublicacion_Result">
+          <Property Type="Int32" Name="IdLibro" Nullable="false" />
+          <Property Type="String" Name="Titulo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="AñoPublicacion" Nullable="true" MaxLength="4" />
+          <Property Type="Int32" Name="IdEditorial" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetByTitulo_Result">
+          <Property Type="Int32" Name="IdLibro" Nullable="false" />
+          <Property Type="String" Name="Titulo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="AñoPublicacion" Nullable="true" MaxLength="4" />
+          <Property Type="Int32" Name="IdEditorial" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="LibroGetAll_Result">
+          <Property Type="Int32" Name="IdLibro" Nullable="false" />
+          <Property Type="String" Name="Titulo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="AñoPublicacion" Nullable="true" MaxLength="4" />
+          <Property Type="Int32" Name="IdEditorial" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="LibroGetById_Result">
+          <Property Type="Int32" Name="IdLibro" Nullable="false" />
+          <Property Type="String" Name="Titulo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="AñoPublicacion" Nullable="true" MaxLength="4" />
+          <Property Type="Int32" Name="IdEditorial" Nullable="false" />
+          <Property Type="String" Name="Editorial" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="IdAutor" Nullable="false" />
+          <Property Type="String" Name="Autor" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="EditorialGetAll_Result">
+          <Property Type="Int32" Name="IdEditorial" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetByBusqueda_Result">
+          <Property Type="Int32" Name="IdAutorLibro" Nullable="false" />
+          <Property Type="Int32" Name="IdAutor" Nullable="false" />
+          <Property Type="String" Name="Autor" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="IdLibro" Nullable="false" />
+          <Property Type="String" Name="Titulo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="AñoPublicacion" Nullable="true" MaxLength="4" />
+          <Property Type="Int32" Name="IdEditorial" Nullable="false" />
+          <Property Type="String" Name="Editorial" Nullable="true" MaxLength="50" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="JSanchezKranonModelStoreContainer" CdmEntityContainer="JSanchezKranonEntities">
+          <EntitySetMapping Name="Autors">
+            <EntityTypeMapping TypeName="JSanchezKranonModel.Autor">
+              <MappingFragment StoreEntitySet="Autor">
+                <ScalarProperty Name="IdAutor" ColumnName="IdAutor" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AutorLibroes">
+            <EntityTypeMapping TypeName="JSanchezKranonModel.AutorLibro">
+              <MappingFragment StoreEntitySet="AutorLibro">
+                <ScalarProperty Name="IdAutorLibro" ColumnName="IdAutorLibro" />
+                <ScalarProperty Name="IdLibro" ColumnName="IdLibro" />
+                <ScalarProperty Name="IdAutor" ColumnName="IdAutor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Editorials">
+            <EntityTypeMapping TypeName="JSanchezKranonModel.Editorial">
+              <MappingFragment StoreEntitySet="Editorial">
+                <ScalarProperty Name="IdEditorial" ColumnName="IdEditorial" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Libroes">
+            <EntityTypeMapping TypeName="JSanchezKranonModel.Libro">
+              <MappingFragment StoreEntitySet="Libro">
+                <ScalarProperty Name="IdLibro" ColumnName="IdLibro" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="AñoPublicacion" ColumnName="AñoPublicacion" />
+                <ScalarProperty Name="IdEditorial" ColumnName="IdEditorial" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="AutorAdd" FunctionName="JSanchezKranonModel.Store.AutorAdd" />
+          <FunctionImportMapping FunctionImportName="AutorDelete" FunctionName="JSanchezKranonModel.Store.AutorDelete" />
+          <FunctionImportMapping FunctionImportName="AutorGetAll" FunctionName="JSanchezKranonModel.Store.AutorGetAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="JSanchezKranonModel.AutorGetAll_Result">
+                <ScalarProperty Name="IdAutor" ColumnName="IdAutor" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="AutorGetById" FunctionName="JSanchezKranonModel.Store.AutorGetById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="JSanchezKranonModel.AutorGetById_Result">
+                <ScalarProperty Name="IdAutor" ColumnName="IdAutor" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="AutorLibroAdd" FunctionName="JSanchezKranonModel.Store.AutorLibroAdd" />
+          <FunctionImportMapping FunctionImportName="AutorLibroDelete" FunctionName="JSanchezKranonModel.Store.AutorLibroDelete" />
+          <FunctionImportMapping FunctionImportName="AutorLibroGetAll" FunctionName="JSanchezKranonModel.Store.AutorLibroGetAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="JSanchezKranonModel.AutorLibroGetAll_Result">
+                <ScalarProperty Name="IdAutorLibro" ColumnName="IdAutorLibro" />
+                <ScalarProperty Name="IdAutor" ColumnName="IdAutor" />
+                <ScalarProperty Name="Autor" ColumnName="Autor" />
+                <ScalarProperty Name="IdLibro" ColumnName="IdLibro" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="AñoPublicacion" ColumnName="AñoPublicacion" />
+                <ScalarProperty Name="IdEditorial" ColumnName="IdEditorial" />
+                <ScalarProperty Name="Editorial" ColumnName="Editorial" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="AutorLibroGetById" FunctionName="JSanchezKranonModel.Store.AutorLibroGetById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="JSanchezKranonModel.AutorLibroGetById_Result">
+                <ScalarProperty Name="IdAutorLibro" ColumnName="IdAutorLibro" />
+                <ScalarProperty Name="IdAutor" ColumnName="IdAutor" />
+                <ScalarProperty Name="Autor" ColumnName="Autor" />
+                <ScalarProperty Name="IdLibro" ColumnName="IdLibro" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="AñoPublicacion" ColumnName="AñoPublicacion" />
+                <ScalarProperty Name="IdEditorial" ColumnName="IdEditorial" />
+                <ScalarProperty Name="Editorial" ColumnName="Editorial" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="AutorLibroUpdate" FunctionName="JSanchezKranonModel.Store.AutorLibroUpdate" />
+          <FunctionImportMapping FunctionImportName="AutorUpdate" FunctionName="JSanchezKranonModel.Store.AutorUpdate" />
+          <FunctionImportMapping FunctionImportName="EditorialAdd" FunctionName="JSanchezKranonModel.Store.EditorialAdd" />
+          <FunctionImportMapping FunctionImportName="EditorialDelete" FunctionName="JSanchezKranonModel.Store.EditorialDelete" />
+          <FunctionImportMapping FunctionImportName="EditorialGetById" FunctionName="JSanchezKranonModel.Store.EditorialGetById" />
+          <FunctionImportMapping FunctionImportName="EditorialUpdate" FunctionName="JSanchezKranonModel.Store.EditorialUpdate" />
+          <FunctionImportMapping FunctionImportName="GetByAutor" FunctionName="JSanchezKranonModel.Store.GetByAutor">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="JSanchezKranonModel.GetByAutor_Result">
+                <ScalarProperty Name="IdAutor" ColumnName="IdAutor" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdLibro" ColumnName="IdLibro" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="AñoPublicacion" ColumnName="AñoPublicacion" />
+                <ScalarProperty Name="IdEditorial" ColumnName="IdEditorial" />
+                <ScalarProperty Name="Nombre1" ColumnName="Nombre1" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetByAutorPublicacion" FunctionName="JSanchezKranonModel.Store.GetByAutorPublicacion">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="JSanchezKranonModel.GetByAutorPublicacion_Result">
+                <ScalarProperty Name="IdAutor" ColumnName="IdAutor" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdLibro" ColumnName="IdLibro" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="AñoPublicacion" ColumnName="AñoPublicacion" />
+                <ScalarProperty Name="IdEditorial" ColumnName="IdEditorial" />
+                <ScalarProperty Name="Nombre1" ColumnName="Nombre1" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetByEditorial" FunctionName="JSanchezKranonModel.Store.GetByEditorial">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="JSanchezKranonModel.GetByEditorial_Result">
+                <ScalarProperty Name="IdAutor" ColumnName="IdAutor" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdLibro" ColumnName="IdLibro" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="AñoPublicacion" ColumnName="AñoPublicacion" />
+                <ScalarProperty Name="IdEditorial" ColumnName="IdEditorial" />
+                <ScalarProperty Name="Nombre1" ColumnName="Nombre1" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetByPublicacion" FunctionName="JSanchezKranonModel.Store.GetByPublicacion">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="JSanchezKranonModel.GetByPublicacion_Result">
+                <ScalarProperty Name="IdLibro" ColumnName="IdLibro" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="AñoPublicacion" ColumnName="AñoPublicacion" />
+                <ScalarProperty Name="IdEditorial" ColumnName="IdEditorial" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetByTitulo" FunctionName="JSanchezKranonModel.Store.GetByTitulo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="JSanchezKranonModel.GetByTitulo_Result">
+                <ScalarProperty Name="IdLibro" ColumnName="IdLibro" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="AñoPublicacion" ColumnName="AñoPublicacion" />
+                <ScalarProperty Name="IdEditorial" ColumnName="IdEditorial" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="LibroAutorDelete" FunctionName="JSanchezKranonModel.Store.LibroAutorDelete" />
+          <FunctionImportMapping FunctionImportName="LibroDelete" FunctionName="JSanchezKranonModel.Store.LibroDelete" />
+          <FunctionImportMapping FunctionImportName="LibroEditorialDelete" FunctionName="JSanchezKranonModel.Store.LibroEditorialDelete" />
+          <FunctionImportMapping FunctionImportName="LibroGetAll" FunctionName="JSanchezKranonModel.Store.LibroGetAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="JSanchezKranonModel.LibroGetAll_Result">
+                <ScalarProperty Name="IdLibro" ColumnName="IdLibro" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="AñoPublicacion" ColumnName="AñoPublicacion" />
+                <ScalarProperty Name="IdEditorial" ColumnName="IdEditorial" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="LibroGetById" FunctionName="JSanchezKranonModel.Store.LibroGetById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="JSanchezKranonModel.LibroGetById_Result">
+                <ScalarProperty Name="IdLibro" ColumnName="IdLibro" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="AñoPublicacion" ColumnName="AñoPublicacion" />
+                <ScalarProperty Name="IdEditorial" ColumnName="IdEditorial" />
+                <ScalarProperty Name="Editorial" ColumnName="Editorial" />
+                <ScalarProperty Name="IdAutor" ColumnName="IdAutor" />
+                <ScalarProperty Name="Autor" ColumnName="Autor" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="EditorialGetAll" FunctionName="JSanchezKranonModel.Store.EditorialGetAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="JSanchezKranonModel.EditorialGetAll_Result">
+                <ScalarProperty Name="IdEditorial" ColumnName="IdEditorial" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="LibroAdd" FunctionName="JSanchezKranonModel.Store.LibroAdd" />
+          <FunctionImportMapping FunctionImportName="LibroUpdate" FunctionName="JSanchezKranonModel.Store.LibroUpdate" />
+          <FunctionImportMapping FunctionImportName="GetByBusqueda" FunctionName="JSanchezKranonModel.Store.GetByBusqueda">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="JSanchezKranonModel.GetByBusqueda_Result">
+                <ScalarProperty Name="IdAutorLibro" ColumnName="IdAutorLibro" />
+                <ScalarProperty Name="IdAutor" ColumnName="IdAutor" />
+                <ScalarProperty Name="Autor" ColumnName="Autor" />
+                <ScalarProperty Name="IdLibro" ColumnName="IdLibro" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="AñoPublicacion" ColumnName="AñoPublicacion" />
+                <ScalarProperty Name="IdEditorial" ColumnName="IdEditorial" />
+                <ScalarProperty Name="Editorial" ColumnName="Editorial" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

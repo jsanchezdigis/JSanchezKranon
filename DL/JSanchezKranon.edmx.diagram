@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="091712b35949437ab3522289afd9c3d6" Name="Diagram1">
+        <EntityTypeShape EntityType="JSanchezKranonModel.Autor" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="JSanchezKranonModel.AutorLibro" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="JSanchezKranonModel.Editorial" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="JSanchezKranonModel.Libro" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <AssociationConnector Association="JSanchezKranonModel.fk_AutorLibro_Autor" ManuallyRouted="false" />
+        <AssociationConnector Association="JSanchezKranonModel.fk_AutorLibro_Libro" ManuallyRouted="false" />
+        <AssociationConnector Association="JSanchezKranonModel.fk_Libro_Editorial" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

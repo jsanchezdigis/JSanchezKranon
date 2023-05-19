@@ -1,0 +1,95 @@
+﻿@model ML.AutorLibro
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Libro</h2>
+            <h5>Agregar y modificar los datos del libro</h5>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm("Form", "AutorLibro", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form-horizontal">
+                    <div class="form-group">
+
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.IdAutorLibro, new { @class = "hidden" })
+
+                            @Html.TextBoxFor(model => model.IdAutorLibro, new { @class = "hidden form-control" })
+                            @Html.ValidationMessageFor(model => model.IdAutorLibro)
+                            @*hidden*@
+                        </div>
+
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.Libro.IdLibro, new { @class = "hidden" })
+
+                            @Html.TextBoxFor(model => model.Libro.IdLibro, new { @class = "hidden form-control" })
+                            @Html.ValidationMessageFor(model => model.Libro.IdLibro)
+                            @*hidden*@
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.Libro.Titulo)
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1"><i class="fa-solid fa-signature" style="color:darkcyan"></i></span>
+                                @Html.TextBoxFor(model => model.Libro.Titulo, new { @class = "form-control", @id = "txtNombre" })
+
+                                @Html.ValidationMessageFor(model => model.Libro.Titulo)
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.Libro.AñoPublicacion)
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1"><i class="fa-solid fa-signature" style="color:darkcyan"></i></span>
+                                @Html.TextBoxFor(model => model.Libro.AñoPublicacion, new { @class = "form-control", @id = "txtNombre" })
+
+                                @Html.ValidationMessageFor(model => model.Libro.AñoPublicacion)
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.Libro.Editorial)
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1"><i class="fa-solid fa-address-book" style="color:darkcyan"></i></span>
+                                @Html.DropDownListFor(model => model.Libro.Editorial.IdEditorial, new SelectList(Model.Libro.Editorial.Editoriales, "IdEditorial", "Nombre"), "Editorial", new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.Autor)
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1"><i class="fa-solid fa-address-book" style="color:darkcyan"></i></span>
+                                @Html.DropDownListFor(model => model.Autor.IdAutor, new SelectList(Model.Autor.Autores, "IdAutor", "Nombre"), "Autor", new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1"><i class="fa-solid fa-bookmark" style="color:green"></i></span>
+                                <input type="submit" value="Guardar" class="btn btn-success" />
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1"><i class="fa-solid fa-rotate-left" style="color:red"></i></span>
+                                @Html.ActionLink("Regresar", "GetAll", "AutorLibro", htmlAttributes: new { @class = "btn btn-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>
